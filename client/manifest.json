@@ -1,0 +1,13 @@
+{
+    "name": "Summarisation",
+    "description": "Summarise the text on the page",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "page.html"
+    },
+    "permissions": [
+        "scripting",
+        "activeTab"
+    ]
+  }
