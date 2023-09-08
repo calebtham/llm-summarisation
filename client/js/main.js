@@ -12,7 +12,7 @@ document.getElementById("summarise").addEventListener("click", () => {
   const summariseIcon = document.getElementById("summarise-icon");
 
   summariseBtn.style.paddingLeft = "6px";
-  summariseIcon.src = "spinner.svg";
+  summariseIcon.src = "../svg/spinner.svg";
 
   getDOMText().then((text) => {
     post("http://127.0.0.1:8000/summarise", {
@@ -58,7 +58,7 @@ function textToHTML(text) {
       (bulletPoint) =>
         `
         <div class="bullet-point">
-          <img class="icon" src="bulletpoint-outline.svg" alt="bulletpoint" width="20" height="20"/>
+          <img class="icon" src="../svg/bulletpoint-outline.svg" alt="bulletpoint" width="20" height="20"/>
           <p>
             ${bulletPoint}
           </p>

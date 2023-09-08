@@ -8,6 +8,7 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain.callbacks import get_openai_callback
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
+
 LARGE_CONTEXT_MODEL = "gpt-3.5-turbo-16k"
 DEFAULT_MODEL = "gpt-3.5-turbo"
 
@@ -69,7 +70,7 @@ def stuff_summarise(text, model):
         """Write a concise summary of the following in bullet point form. 
         The following text was taken from a website, so there may be redundant website information that should be avoided. 
         Extract only the most important content information.
-        There is no need to state "The article says" or "The article states" or similar before each bullet point.
+        Do not state "The article says" or "The text mentions" or similar in the bullet points.
         TEXT:"{text}"
         CONCISE BULLET POINT SUMMARY:"""
 
@@ -114,7 +115,7 @@ def map_reduce_summarise(text):
         """Write a concise summary of the following in bullet point form. 
         The following text was taken from a website, so there may be redundant website information. 
         Extract only the most important content information.
-        There is no need to state "The article says" or "The article states" or similar before each bullet point.
+        Do not state "The article says" or "The text mentions" or similar in the bullet points.
         TEXT:"{text}"
         CONCISE BULLET POINT SUMMARY:"""
 
