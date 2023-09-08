@@ -1,0 +1,104 @@
+body {
+  background-image: radial-gradient(circle at bottom right, #3c114d, #0f0a11);
+  color: white;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+h1 {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(to right, #d6c2d7, #fff0f9, #c3b1c4);
+}
+
+p {
+  white-space: normal;
+  font-size: 1rem;
+}
+
+button {
+  color: white;
+  cursor: pointer;
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+  padding-left: 9px;
+}
+
+div.center {
+  display: flex;
+  justify-content: center;
+}
+
+div.bullet-point {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+div#summary {
+  width: 500px;
+  padding: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 30px;
+}
+
+.card {
+  --left: 0px;
+  --top: 0px;
+  overflow: hidden;
+  position: relative;
+  border: solid 1px #ffffff25;
+  background-color: #ffffff0a;
+  transition: box-shadow 0.5s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: -2px 0 5px #ff00ffa0, 0 2px 5px #ff89ffa0, 0 -2px 5px #ff89ffa0,
+    2px 0 5px #00ffffa0; /* outer right cyan */
+  transition: box-shadow 0.5s ease-in-out;
+}
+
+.card .icon {
+  opacity: 0.8;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.card:hover .icon {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.card::before {
+  content: "";
+  background: #f0f;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: translate(-50%, -50%) scale(1.5);
+  z-index: -10;
+  filter: blur(2.5rem);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.card-large::before {
+  width: 10rem;
+  height: 10rem;
+  filter: blur(7rem);
+}
+
+.card:hover::before {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.icon {
+  filter: invert(1);
+}

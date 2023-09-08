@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Summariser</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
   <body>
     <h1>Summariser</h1>
-    <button id="summarise">Summarise</button>
-    <p id="summary"></p>
+    <div class="center">
+      <button class="card" id="summarise">
+        <img class="icon" id="summarise-icon" src="summarise.svg" alt="Summarise" 
+          width="30" height="30" />
+      </button>
+    </div>
+    <div id="summary" class="card card-large" hidden></div>
     <script src="main.js"></script>
+    <script src="style.js"></script>
   </body>
 </html>
