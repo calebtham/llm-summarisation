@@ -6,7 +6,9 @@ from langchain.chains import LLMChain
 from langchain.callbacks import get_openai_callback
 import tiktoken
 
-MODEL = "gpt-3.5-turbo-16k"
+LARGE_CONTEXT_MODEL = "gpt-3.5-turbo-16k"
+DEFAULT_MODEL = "gpt-3.5-turbo"
+
 
 def num_tokens_from_string(string: str, encoding_name: str) -> int:
     """Returns the number of tokens in a text string."""
@@ -17,18 +19,22 @@ def num_tokens_from_string(string: str, encoding_name: str) -> int:
 
 def summarise(text):
     '''Summarise text using GPT-3.5'''
+
     text = clean_text(text)
-    
-    if num_tokens_from_string(text, MODEL) > 1000:
+    tokens = num_tokens_from_string(text, DEFAULT_MODEL)
+
+    if tokens > 8000:
         return "Text too long. Not allowed for the time being."
 
-    llm = ChatOpenAI(temperature=0, model_name=MODEL)
+    model = DEFAULT_MODEL if tokens < 4000 else LARGE_CONTEXT_MODEL
+
+    llm = ChatOpenAI(temperature=0, model_name=model)
 
     prompt_template = \
-    """Write a concise summary of the following in bullet point form:
+        """Write a concise summary of the following in bullet point form. The following text was taken from a website, so there may be redundant website information. Extract only the most important content information.:
     "{text}"
     CONCISE SUMMARY:"""
-    
+
     prompt = PromptTemplate.from_template(prompt_template)
 
     chain = LLMChain(llm=llm, prompt=prompt)
