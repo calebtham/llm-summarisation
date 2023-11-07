@@ -11,9 +11,8 @@ from langchain.callbacks import get_openai_callback
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 
-LARGE_CONTEXT_MODEL = "gpt-3.5-turbo-16k"
-DEFAULT_MODEL = "gpt-3.5-turbo"
-
+DEFAULT_MODEL = "gpt-3.5-turbo-1106"
+MAX_TOKENS = 15000
 
 def summarise(text):
     '''Summarise text using GPT-3.5'''
@@ -21,10 +20,10 @@ def summarise(text):
     text = clean_text(text)
     no_tokens = num_tokens_from_string(text)
 
-    if no_tokens > 10000:
+    if no_tokens > MAX_TOKENS:
         return map_reduce_summarise(text)
     else:
-        model = DEFAULT_MODEL if no_tokens < 3900 else LARGE_CONTEXT_MODEL
+        model = DEFAULT_MODEL
         return stuff_summarise(text, model)
 
 
@@ -84,7 +83,7 @@ def get_summary_prompt():
         "- Summarize the following text concisely in bullet point form."
         "- Extract the most important, interesting, and relevant content."
         "- The text was taken from a website, so there may be redundant website information that should be avoided."
-        "- Do not state \"The article says\" or \"The text mentions\" or similar in the bullet points."
+        "- Do not state \"The article says\" or \"The text mentions\" or \"The text contains\" or similar statements about the form of the article/text/website in the bullet points."
         "- Do not repeat the same information in multiple bullet points."
         "TEXT:{text}"
         "BULLET POINT SUMMARY:"
@@ -113,7 +112,7 @@ def map_reduce_summarise(text):
     # Split text into chunks
     text_splitter = RecursiveCharacterTextSplitter(
         length_function=num_tokens_from_string,
-        chunk_size=3500,
+        chunk_size=MAX_TOKENS,
         chunk_overlap=10,
         add_start_index=True,
     )
@@ -127,6 +126,7 @@ def map_reduce_summarise(text):
         "- Summarize the following text concisely in bullet point form."
         "- Extract the most important, interesting, and relevant content."
         "- The text was taken from a website, so there may be redundant website information that should be avoided."
+        "- Do not state \"The article says\" or \"The text mentions\" or \"The text contains\" or similar statements about the form of the article/text/website in the bullet points."
         "TEXT:{text}"
         "BULLET POINT SUMMARY:"
     )
@@ -145,10 +145,11 @@ def map_reduce_summarise(text):
         chain_type='map_reduce',
         map_prompt=map_custom_prompt,
         combine_prompt=combine_custom_prompt,
-        verbose=False
+        verbose=False,
+        output_key="summary"
     )
 
-    return log_chain_run(summary_chain, text)["summary"]
+    return log_chain_run(summary_chain, docs)["summary"]
 
 
 def summarise_self_reflect(text):
